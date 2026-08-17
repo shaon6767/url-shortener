@@ -47,7 +47,7 @@ cp .env.example .env
 npm install
 npm run dev
 \`\`\`
-Needs a local or hosted Redis instance (Upstash has a free tier).
+Needs a local or hosted Redis instance.
 
 ### Client
 \`\`\`bash
