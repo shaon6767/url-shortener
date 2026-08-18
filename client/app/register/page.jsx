@@ -10,17 +10,21 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const { register } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
     try {
       await register(name, email, password);
       router.push("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,9 +59,10 @@ export default function RegisterPage() {
         {error && <p className="text-sm text-red-600">{error}</p>}
         <button
           type="submit"
-          className="w-full py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800"
+          disabled={loading}
+          className="w-full py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
         >
-          Register
+          {loading ? "Creating account..." : "Register"}
         </button>
       </form>
       <p className="text-sm text-gray-600 mt-4">
